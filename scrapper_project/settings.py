@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "scrap",
     "django_celery_results",
+    'django_celery_beat',
     
 ]
 
@@ -108,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -125,23 +126,13 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# settings.py
 
 # Celery configuration
-CELERY_BROKER_URL = 'redis://localhost:6379/0'  # Change this to your broker URL
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'  # Change this to your broker URL
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
+CELERY_BROKER_URL = 'redis://localhost:6379/0' 
 CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'UTC'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_TIMEZONE = 'Asia/Kolkata'
+CELERY_RESULT_EXTENDED = True
 
-# Schedule your task
-from celery.schedules import crontab
 
-CELERY_BEAT_SCHEDULE = {
-    'run-scraping-task-every-day': {
-        'task': 'scrap.jobscrap.New_Func',
-        'schedule': crontab(minute=5),  # Run every day at midnight
-    },
-}
 
